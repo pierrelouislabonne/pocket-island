@@ -22,6 +22,7 @@
 .c-cloud-line {
   transform: translateX(var(--linear-move));
   -webkit-transform: translateX(var(--linear-move));
+  will-change: transform;
 }
 
 .c-island,
@@ -31,9 +32,14 @@
   will-change: transform;
 }
 
-.c-mountain,
-.wave {
+.c-mountain {
   transform: rotateY(var(--canvas-rotation));
   -webkit-transform: rotateY(var(--canvas-rotation));
+  will-change: transform;
+}
+
+.c-wave {
+  transform: rotateX(90deg) rotateY(calc(0 - var(--canvas-rotation)));
+  -webkit-transform: rotateX(90deg) rotateY(calc(0 - var(--canvas-rotation)));
   will-change: transform;
 }
