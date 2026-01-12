@@ -1,0 +1,39 @@
+/*//////*/
+
+[cursor-icon="grab"] {
+  opacity: 0;
+}
+
+[cursor-icon="grabbing"] {
+  opacity: 0;
+}
+
+.cursor-tag {
+  opacity: 0;
+}
+
+/*//////*/
+
+:root {
+  --canvas-rotation: 0deg;
+  --linear-move: 0%;
+}
+
+.c-cloud-line {
+  transform: translateX(var(--linear-move));
+  -webkit-transform: translateX(var(--linear-move));
+}
+
+.c-island,
+.waves-container {
+  transform: rotateX(80deg) rotateZ(var(--canvas-rotation));
+  -webkit-transform: rotateX(80deg) rotateZ(var(--canvas-rotation));
+  will-change: transform;
+}
+
+.c-mountain,
+.wave {
+  transform: rotateY(var(--canvas-rotation));
+  -webkit-transform: rotateY(var(--canvas-rotation));
+  will-change: transform;
+}
