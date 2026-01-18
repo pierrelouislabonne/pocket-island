@@ -1,6 +1,6 @@
 # pocket-island
 
-🏝️ Pocket Island
+# 🏝️ Pocket Island
 Pocket Island is an experimental Webflow project featuring a dynamic 3D island built entirely with CSS 3D transforms, powered by GSAP for high-performance interactions and state management.
 
 🚀 Overview
