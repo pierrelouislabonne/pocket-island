@@ -23,25 +23,21 @@
 .c-solar-system,
 .c-cloud-line {
   transform: translateX(var(--linear-move));
-  -webkit-transform: translateX(var(--linear-move));
   will-change: transform;
 }
 
 .solar-system {
   transform: rotateZ(var(--day-night-rotation));
-  -webkit- transform: rotateZ(var(--day-night-rotation));
   will-change: transform;
 }
 
 .c-island {
   transform: rotateX(80deg) rotateZ(var(--scene-rotation));
-  -webkit-transform: rotateX(80deg) rotateZ(var(--scene-rotation));
   will-change: transform;
 }
 
 .island-grid__item,
 .wave {
   transform: rotateY(var(--scene-rotation));
-  -webkit-transform: rotateY(var(--scene-rotation));
   will-change: transform;
 }
