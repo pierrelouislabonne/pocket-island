@@ -15,32 +15,33 @@
 /*//////*/
 
 :root {
-  --canvas-rotation: 0deg;
+  --scene-rotation: 0deg;
   --linear-move: 0%;
+  --day-night-rotation: 0deg;
 }
 
-.solar-system-container,
+.c-solar-system,
 .c-cloud-line {
   transform: translateX(var(--linear-move));
   -webkit-transform: translateX(var(--linear-move));
   will-change: transform;
 }
 
-.c-island,
-.waves-container {
-  transform: rotateX(80deg) rotateZ(var(--canvas-rotation));
-  -webkit-transform: rotateX(80deg) rotateZ(var(--canvas-rotation));
+.solar-system {
+  transform: rotateZ(var(--day-night-rotation));
+  -webkit- transform: rotateZ(var(--day-night-rotation));
   will-change: transform;
 }
 
-.c-item {
-  transform: rotateY(var(--canvas-rotation));
-  -webkit-transform: rotateY(var(--canvas-rotation));
+.c-island {
+  transform: rotateX(80deg) rotateZ(var(--scene-rotation));
+  -webkit-transform: rotateX(80deg) rotateZ(var(--scene-rotation));
   will-change: transform;
 }
 
-.c-wave {
-  transform: rotateX(-90deg) rotateY(calc(0deg - var(--canvas-rotation)));
-  -webkit-transform: rotateX(-90deg) rotateY(calc(0deg - var(--canvas-rotation)));
+.island-grid__item,
+.wave {
+  transform: rotateY(var(--scene-rotation));
+  -webkit-transform: rotateY(var(--scene-rotation));
   will-change: transform;
 }
