@@ -1,46 +1,45 @@
-# pocket-island
-
 # 🏝️ Pocket Island
-Pocket Island is an experimental Webflow project featuring a dynamic 3D island built entirely with CSS 3D transforms, powered by GSAP for high-performance interactions and state management.
 
-🚀 Overview
-This project explores the limits of the browser's rendering engine by creating a 3D environment without using WebGL or Three.js. Every element—from the island's rotation to the day/night cycle—is controlled through CSS variables updated in real-time by GSAP.
+**Pocket Island** is an experimental Webflow project featuring a dynamic 3D island built entirely with **CSS 3D transforms**. The experience is powered by **GSAP** for high-performance interactions, state management, and smooth animations.
 
-✨ Key Features
-Pure CSS 3D Engine: The island and its components (grid, waves, trees) use rotateX, rotateY, and rotateZ transforms to create depth.
+---
 
-Interactive Rotation: Users can manually spin the island using GSAP Draggable with momentum and inertia.
+## 🚀 Key Features
 
-Dynamic Speed Control: A custom "Engine Room" fader allows users to adjust the island's rotation speed multiplier from 0.1x up to 4x.
+* **Pure CSS 3D Engine**: The island and its components (grid, waves, trees) use `rotateX`, `rotateY`, and `rotateZ` transforms to create depth and perspective without WebGL.
+* **Interactive Rotation**: Users can manually spin the island using GSAP `Draggable` with momentum and inertia.
+* **Dynamic Speed Control**: A custom speed fader allows users to adjust the rotation velocity, mapping values from 0.1x to 4x.
+* **Day/Night Cycle**: A toggle and dedicated fader transition the environment between day and night, updating CSS variables in real-time.
+* **Responsive State Management**: A breakpoint watcher automatically resets the island's speed and time of day for mobile viewports to ensure optimal performance.
+* **Elastic Custom Cursor**: A physics-based cursor that tilts based on movement and reacts to interactive elements with "grab" and "grabbing" states.
 
-Day/Night Cycle: A toggle and dedicated fader transition the environment between day and night states, updating visual properties via CSS variables.
+---
 
-Responsive State Management: A built-in breakpoint watcher automatically resets the island's speed and time of day for mobile users to ensure optimal performance.
+## 🛠️ Technical Stack
 
-Elastic Custom Cursor: A physics-based cursor that tilts and reacts to movement speed, with specific "grab" states for interactive elements.
+* **Platform**: Webflow
+* **Animation Engine**: GSAP (GreenSock Animation Platform)
+    * `gsap.ticker` drives the continuous rotation motor.
+    * `Draggable` powers the UI faders and island interaction.
+    * `gsap.quickTo()` provides high-performance cursor tracking.
+* **Styling**: CSS 3D Transforms and CSS Custom Properties (Variables) for real-time rendering.
 
-🛠️ Technical Stack
-Platform: Webflow
+---
 
-Animation Engine: GSAP (GreenSock Animation Platform)
+## 📂 Project Structure
 
-gsap.ticker for the rotation motor.
+The project logic is modularized into specialized scripts to handle different aspects of the experience:
 
-Draggable for the physical controls and island interaction.
+### Core Logic
+* **`scene-rotation.js`**: Manages the continuous motor and manual drag logic.
+* **`controls.js`**: Initializes the global `window.islandState` and handles UI faders.
+* **`day-night-cycle.js`**: Specifically handles the celestial rotation values based on the state.
 
-gsap.quickTo() for high-performance cursor tracking.
+### Utilities
+* **`custom-cursor.js`**: Contains the logic for the tilting UI cursor and its interaction states.
+* **`breakpoint-watcher.js`**: Monitors screen size to adjust performance and state for mobile devices.
 
-Styling: CSS 3D Transforms and CSS Custom Properties (Variables).
+---
 
-📦 Project Structure
-The project logic is modularized into specialized scripts:
-
-scene-rotation.js: Manages the continuous rotation and manual drag logic.
-
-controls.js: Handles the "Engine Room" UI and islandState object.
-
-day-night-cycle.js: Specifically manages the celestial rotation values.
-
-custom-cursor.js: Logic for the tilting UI cursor.
-
-breakpoint-watcher.js: Ensures the experience is tailored for mobile viewports.
+> [!TIP]
+> **Performance Note**: To minimize layout thrashing, this project utilizes a centralized `gsap.ticker` to update CSS variables, ensuring the 3D transforms are recalculated only when necessary.
