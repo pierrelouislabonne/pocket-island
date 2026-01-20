@@ -1,18 +1,19 @@
 /* ---------------------------------------------------------------------------- */
-/*                           BREAKPOINT WATCHER                                 */
+/*                             BREAKPOINT WATCHER                               */
 /* ---------------------------------------------------------------------------- */
 
 const mm = window.matchMedia("(max-width: 991px)");
 
 function handleResponsive(e) {
-  if (e.matches && window.islandState) {
-    window.islandState.speedMultiplier = 1;
+  if (window.islandState) {
+
+    window.islandState.speedValue = 0.5;
     window.islandState.dayNightValue = 0;
     window.islandState.isNight = false;
 
-    gsap.to('[pitch-fader="speed"]', { rotation: 0 });
-    gsap.to('[pitch-fader="day-night"]', { rotation: -120 });
-    gsap.to(".toggl", { justifyContent: "flex-start" });
+    gsap.set('[pitch-fader="speed"]', { rotation: 0 });
+    gsap.set('[pitch-fader="day-night"]', { rotation: -120 });
+    gsap.set(".toggl-dot", { xPercent: 0 });
   }
 }
 
