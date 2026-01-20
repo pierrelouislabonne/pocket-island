@@ -8,8 +8,8 @@ const cursorConfig = {
   selectors: {
     cursor: ".c-cursor",
     tag: ".cursor-tag",
-    scene: ".screen__landscape", // Sélecteur spécifique pour la scène
-    triggers: ".screen__landscape, [pitch-draggable]", // Tous les éléments "grabbables"
+    scene: ".screen__landscape",
+    triggers: ".screen__landscape, [pitch-draggable]",
   },
 };
 
@@ -38,13 +38,11 @@ function initCustomCursor(conf) {
     lastY = 0,
     timer, isDown = false;
 
-  // Mise à jour de l'UI avec condition sur le tag
   const updateUI = (state, isOverScene) => {
     Object.keys(icons).forEach((key) => {
       if (icons[key]) icons[key].style.opacity = key === state ? 1 : 0;
     });
 
-    // Le tag ne s'affiche QUE si on est sur la scène
     gsap.to(el.tag, {
       opacity: isOverScene ? 1 : 0,
       duration: 0.3,
@@ -70,7 +68,7 @@ function initCustomCursor(conf) {
     if (trigger) {
       isDown = true;
       const isOverScene = trigger.matches(conf.selectors.scene);
-      updateUI("grabbing", isOverScene); // Grabbing sur tout, tag seulement sur scène
+      updateUI("grabbing", isOverScene);
     }
   }, { capture: true });
 
@@ -89,7 +87,7 @@ function initCustomCursor(conf) {
     const isScene = trig.matches(conf.selectors.scene);
 
     trig.addEventListener("pointerenter", () => {
-      if (!isDown) updateUI("grab", isScene); // Affiche le tag uniquement si c'est la scène
+      if (!isDown) updateUI("grab", isScene);
     });
 
     trig.addEventListener("pointerleave", () => {
