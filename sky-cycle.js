@@ -11,7 +11,7 @@ const initDayNightRender = () => {
     // 1. Rotation (0-180deg)
     root.style.setProperty("--sky-rotation", `${progress * 180}deg`);
 
-    // 2. Opacité (0-1)
+    // 2. Opacity (0-1)
     root.style.setProperty("--sky-opacity", progress);
 
   });
