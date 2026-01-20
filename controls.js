@@ -12,7 +12,6 @@ const initControls = () => {
   const stepAngle = 30;
   const snapValues = gsap.utils.snap(stepAngle);
 
-  // Création d'un mapper réutilisable : -120/120 -> 0/1
   const rotationToProgress = gsap.utils.mapRange(-120, 120, 0, 1);
 
   // --- 1. SPEED PITCH ---
@@ -27,7 +26,6 @@ const initControls = () => {
     snap: snapValues,
     cursor: false,
     onDrag: function () {
-      // Utilisation du mapper commun
       window.islandState.speedValue = rotationToProgress(this.rotation);
     },
   });
@@ -59,9 +57,7 @@ const initControls = () => {
   toggle.addEventListener("click", () => {
     window.islandState.isNight = !window.islandState.isNight;
 
-    // Valeurs cibles normalisées
     const targetVal = window.islandState.isNight ? 1 : 0;
-    // On convertit le 0/1 en degrés (-120/120) pour le fader
     const targetRot = window.islandState.isNight ? 120 : -120;
 
     window.islandState.dayNightValue = targetVal;
