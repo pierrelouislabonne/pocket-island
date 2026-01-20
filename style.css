@@ -1,14 +1,8 @@
 /*//////*/
 
-[cursor-icon="grab"] {
-  opacity: 0;
-}
-
-[cursor-icon="grabbing"] {
-  opacity: 0;
-}
-
-.cursor-tag {
+[cursor-icon="grab"],
+[cursor-icon="grabbing",
+.cursor-tag] {
   opacity: 0;
 }
 
@@ -16,18 +10,19 @@
 
 :root {
   --scene-rotation: 0deg;
-  --linear-move: 0%;
-  --day-night-rotation: 0deg;
+  --scene-move: 0%;
+  --sky-rotation: 0deg;
+  --sky-opacity: 0;
 }
 
-.c-solar-system,
+.c-sky,
 .c-cloud-line {
-  transform: translateX(var(--linear-move));
+  transform: translateX(var(--scene-move));
   will-change: transform;
 }
 
 .solar-system {
-  transform: rotateZ(var(--day-night-rotation));
+  transform: rotateZ(var(--sky-rotation));
   will-change: transform;
 }
 
@@ -39,5 +34,12 @@
 .island-grid__item,
 .wave {
   transform: rotateY(var(--scene-rotation));
+  will-change: transform;
+}
+
+.sky-bg,
+.screen__overlay,
+.sun-glow {
+  opacity: var(--sky-opacity);
   will-change: transform;
 }
