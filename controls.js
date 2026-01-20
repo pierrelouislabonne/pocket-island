@@ -1,12 +1,19 @@
 /* ---------------------------------------------------------------------------- */
-/*                            CONTROLS (PITCHS)                                 */
+/*                                 CONTROLS                                     */
 /* ---------------------------------------------------------------------------- */
 
-window.islandState = { speedMultiplier: 1, dayNightValue: 0, isNight: false };
+window.islandState = {
+  speedValue: 0.5,
+  dayNightValue: 0,
+  isNight: false
+};
 
 const initControls = () => {
   const stepAngle = 30;
   const snapValues = gsap.utils.snap(stepAngle);
+
+  // Création d'un mapper réutilisable : -120/120 -> 0/1
+  const rotationToProgress = gsap.utils.mapRange(-120, 120, 0, 1);
 
   // --- 1. SPEED PITCH ---
   const speedFader = document.querySelector('[pitch-fader="speed"]');
@@ -19,16 +26,11 @@ const initControls = () => {
     liveSnap: true,
     snap: snapValues,
     cursor: false,
-    onDrag: updateSpeed,
+    onDrag: function () {
+      // Utilisation du mapper commun
+      window.islandState.speedValue = rotationToProgress(this.rotation);
+    },
   });
-
-  function updateSpeed() {
-    const angle = gsap.getProperty(this.target, "rotation");
-    window.islandState.speedMultiplier =
-      angle <= 0 ?
-      gsap.utils.mapRange(-120, 0, 0.1, 1, angle) :
-      gsap.utils.mapRange(0, 120, 1, 4, angle);
-  }
 
   // --- 2. DAY/NIGHT PITCH ---
   const dnFader = document.querySelector('[pitch-fader="day-night"]');
@@ -39,46 +41,40 @@ const initControls = () => {
   Draggable.create(dnFader, {
     type: "rotation",
     trigger: dnTrigger,
-    inertia: false, // Désactivé ici
     bounds: { minRotation: -120, maxRotation: 120 },
     liveSnap: true,
     snap: snapValues,
     cursor: false,
     onDrag: function () {
-      updateDayNight(this.rotation);
+      const progress = rotationToProgress(this.rotation);
+      window.islandState.dayNightValue = progress;
+      window.islandState.isNight = progress > 0.5;
+      updateToggleVisuals();
     },
   });
 
-  function updateDayNight(rotation) {
-    const val = gsap.utils.mapRange(-120, 120, 0, 180, rotation);
-    window.islandState.dayNightValue = val;
-    window.islandState.isNight = val > 90;
-    updateToggleVisuals(false);
-  }
-
   // --- 3. DAY/NIGHT TOGGLE ---
-  const toggle = document.querySelector(".toggl");
+  const toggle = document.querySelector(".screen-ui__c-toggl");
+
   toggle.addEventListener("click", () => {
     window.islandState.isNight = !window.islandState.isNight;
-    const targetVal = window.islandState.isNight ? 180 : 0;
+
+    // Valeurs cibles normalisées
+    const targetVal = window.islandState.isNight ? 1 : 0;
+    // On convertit le 0/1 en degrés (-120/120) pour le fader
     const targetRot = window.islandState.isNight ? 120 : -120;
-    gsap.to(window.islandState, {
-      dayNightValue: targetVal,
-      duration: 0.8,
-      ease: "power2.inOut",
-    });
-    gsap.to(dnFader, {
-      rotation: targetRot,
-      duration: 0.8,
-      ease: "power2.inOut",
-    });
+
+    window.islandState.dayNightValue = targetVal;
+    gsap.set(dnFader, { rotation: targetRot });
+
     updateToggleVisuals();
   });
 
   function updateToggleVisuals() {
-    gsap.to(toggle, {
-      justifyContent: window.islandState.isNight ? "flex-end" : "flex-start",
+    gsap.to(".toggl-dot", {
+      xPercent: window.islandState.isNight ? 100 : 0,
       duration: 0.3,
+      ease: "power2.out",
     });
   }
 };
