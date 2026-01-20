@@ -44,7 +44,6 @@ const initSceneRotation = () => {
   gsap.ticker.add((time, deltaTime) => {
     const progress = window.islandState.speedValue;
 
-    // Mapping asymétrique : 0 -> 0.1 | 0.5 -> 1 | 1 -> 4
     const multiplier = progress <= 0.5 ?
       gsap.utils.mapRange(0, 0.5, 0.1, 1, progress) :
       gsap.utils.mapRange(0.5, 1, 1, 4, progress);
