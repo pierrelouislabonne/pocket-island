@@ -45,8 +45,10 @@
 
 /* Show night look */
 .sky-bg,
-.screen__overlay,
-.sun-glow {
-  opacity: var(--sky-opacity);
-  will-change: transform;
+.sun-glow,
+.smoke-glow,
+.house-glow,
+{
+opacity: var(--sky-opacity);
+will-change: transform;
 }
