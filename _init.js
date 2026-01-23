@@ -21,7 +21,7 @@
 /*                                    INIT                                      */
 /* ---------------------------------------------------------------------------- */
 
-// --- IMPORTS ---
+/// --- IMPORTS ---
 
 slater_import('/project/18238/page/53445.js'); // CUSTOM CURSOR
 slater_import('/project/18238/page/53943.js'); // CONTROLS (PITCHS)
