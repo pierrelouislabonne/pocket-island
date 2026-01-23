@@ -19,7 +19,11 @@ function initCustomCursor(conf) {
     tag: document.querySelector(conf.selectors.tag),
     triggers: document.querySelectorAll(conf.selectors.triggers),
   };
+
   if (!el.cursor) return;
+
+  // Initial state: hidden for smooth fade-in
+  gsap.set(el.cursor, { opacity: 0 });
 
   const xTo = gsap.quickTo(el.cursor, "x", { duration: conf.smoothing.pos, ease: "power2.out" });
   const yTo = gsap.quickTo(el.cursor, "y", { duration: conf.smoothing.pos, ease: "power2.out" });
@@ -36,7 +40,8 @@ function initCustomCursor(conf) {
 
   let lastX = 0,
     lastY = 0,
-    timer, isDown = false;
+    timer, timeoutId, isDown = false,
+    hasMoved = false;
 
   const updateUI = (state, isOverScene) => {
     Object.keys(icons).forEach((key) => {
@@ -50,34 +55,57 @@ function initCustomCursor(conf) {
     });
   };
 
+  // Fade in on first movement
+  const revealCursor = () => {
+    if (!hasMoved) {
+      gsap.to(el.cursor, { opacity: 1, duration: 0.4 });
+      hasMoved = true;
+    }
+  };
+
   window.addEventListener("pointermove", (e) => {
+    revealCursor();
     const { clientX: x, clientY: y } = e;
     const tilt = Math.max(-conf.tilt.max, Math.min(conf.tilt.max, (x - lastX) * conf.tilt.fX + (
       y - lastY) * conf.tilt.fY));
+
     xTo(x);
     yTo(y);
     rotTo(tilt);
+
     lastX = x;
     lastY = y;
+
     cancelAnimationFrame(timer);
-    timer = requestAnimationFrame(() => setTimeout(() => rotTo(0), conf.smoothing.delay));
+    if (timeoutId) clearTimeout(timeoutId);
+
+    timer = requestAnimationFrame(() => {
+      timeoutId = setTimeout(() => rotTo(0), conf.smoothing.delay);
+    });
   }, { passive: true });
+
+  // Handle window focus/visibility
+  document.addEventListener("mouseleave", () => {
+    gsap.to(el.cursor, { opacity: 0, duration: 0.3 });
+  });
+
+  document.addEventListener("mouseenter", () => {
+    if (hasMoved) gsap.to(el.cursor, { opacity: 1, duration: 0.3 });
+  });
 
   window.addEventListener("pointerdown", (e) => {
     const trigger = e.target.closest(conf.selectors.triggers);
     if (trigger) {
       isDown = true;
-      const isOverScene = trigger.matches(conf.selectors.scene);
-      updateUI("grabbing", isOverScene);
+      updateUI("grabbing", trigger.matches(conf.selectors.scene));
     }
   }, { capture: true });
 
-  window.addEventListener("pointerup", (e) => {
+  window.addEventListener("pointerup", () => {
     isDown = false;
     const overTrigger = Array.from(el.triggers).find((t) => t.matches(":hover"));
     if (overTrigger) {
-      const isOverScene = overTrigger.matches(conf.selectors.scene);
-      updateUI("grab", isOverScene);
+      updateUI("grab", overTrigger.matches(conf.selectors.scene));
     } else {
       updateUI("pointer", false);
     }
@@ -85,15 +113,16 @@ function initCustomCursor(conf) {
 
   el.triggers.forEach((trig) => {
     const isScene = trig.matches(conf.selectors.scene);
-
-    trig.addEventListener("pointerenter", () => {
-      if (!isDown) updateUI("grab", isScene);
-    });
-
-    trig.addEventListener("pointerleave", () => {
-      if (!isDown) updateUI("pointer", false);
-    });
+    trig.addEventListener("pointerenter", () => { if (!isDown) updateUI("grab", isScene); });
+    trig.addEventListener("pointerleave", () => { if (!isDown) updateUI("pointer", false); });
   });
+
+  // Check initial hover state on load
+  const initialHover = Array.from(el.triggers).find(trig => trig.matches(':hover'));
+  if (initialHover) {
+    updateUI("grab", initialHover.matches(conf.selectors.scene));
+    revealCursor();
+  }
 }
 
 initCustomCursor(cursorConfig);
