@@ -5,7 +5,7 @@
 const mm = window.matchMedia("(max-width: 991px)");
 
 function handleResponsive(e) {
-  if (window.islandState) {
+  if (e.matches && window.islandState) {
 
     window.islandState.speedValue = 0.5;
     window.islandState.dayNightValue = 0;
