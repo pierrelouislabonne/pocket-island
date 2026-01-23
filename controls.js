@@ -5,14 +5,14 @@
 window.islandState = {
   speedValue: 0.5,
   dayNightValue: 0,
-  isNight: false
+  isNight: false,
 };
 
 const initControls = () => {
   const stepAngle = 30;
   const snapValues = gsap.utils.snap(stepAngle);
-
   const rotationToProgress = gsap.utils.mapRange(-120, 120, 0, 1);
+  const progressToRotation = gsap.utils.mapRange(0, 1, -120, 120);
 
   // --- 1. SPEED PITCH ---
   const speedFader = document.querySelector('[pitch-fader="speed"]');
@@ -34,7 +34,7 @@ const initControls = () => {
   const dnFader = document.querySelector('[pitch-fader="day-night"]');
   const dnTrigger = document.querySelector('[pitch-draggable="day-night"]');
 
-  gsap.set(dnFader, { rotation: -120 });
+  gsap.set(dnFader, { rotation: progressToRotation(window.islandState.dayNightValue) });
 
   Draggable.create(dnFader, {
     type: "rotation",
@@ -44,10 +44,18 @@ const initControls = () => {
     snap: snapValues,
     cursor: false,
     onDrag: function () {
-      const progress = rotationToProgress(this.rotation);
-      window.islandState.dayNightValue = progress;
-      window.islandState.isNight = progress > 0.5;
-      updateToggleVisuals();
+      const targetProgress = rotationToProgress(this.rotation);
+
+      gsap.to(window.islandState, {
+        dayNightValue: targetProgress,
+        duration: 0.8,
+        ease: "power2.out",
+        overwrite: "auto",
+        onUpdate: () => {
+          window.islandState.isNight = window.islandState.dayNightValue > 0.5;
+          updateToggleVisuals();
+        }
+      });
     },
   });
 
@@ -56,12 +64,16 @@ const initControls = () => {
 
   toggle.addEventListener("click", () => {
     window.islandState.isNight = !window.islandState.isNight;
-
     const targetVal = window.islandState.isNight ? 1 : 0;
-    const targetRot = window.islandState.isNight ? 120 : -120;
 
-    window.islandState.dayNightValue = targetVal;
-    gsap.set(dnFader, { rotation: targetRot });
+    gsap.to(window.islandState, {
+      dayNightValue: targetVal,
+      duration: 0.5,
+      ease: "power2.inOut",
+      overwrite: true,
+    });
+
+    gsap.set(dnFader, { rotation: progressToRotation(targetVal) });
 
     updateToggleVisuals();
   });
