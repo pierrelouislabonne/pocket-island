@@ -1,54 +1,10 @@
-/*/ ---------------- CUSTOM CURSOR ------------------- /*/
+/* ---------------------------------------------------------------------------- */
+/*                                PAGE LOAD CSS                                 */
+/* ---------------------------------------------------------------------------- */
 
 /* Hide cursors at load */
 [cursor-icon="grab"],
 [cursor-icon="grabbing"],
 .cursor-tag {
   opacity: 0;
-}
-
-/*/ ------------------------ 3D CSS ------------------ /*/
-
-/* Root CSS variables */
-:root {
-  --scene-rotation: 0deg;
-  --scene-move: 0%;
-  --sky-rotation: 0deg;
-  --sky-opacity: 0;
-}
-
-/* Sky linear move */
-.c-sky,
-.c-cloud-line {
-  transform: translateX(var(--scene-move));
-  will-change: transform;
-}
-
-/* Sky rotation */
-.solar-system {
-  transform: rotateZ(var(--sky-rotation));
-  will-change: transform;
-}
-
-/* Island rotation */
-.c-island {
-  transform: rotateX(80deg) rotateZ(var(--scene-rotation));
-  will-change: transform;
-}
-
-/* Offset island rotation on items and waves */
-.island-grid__item,
-.wave {
-  transform: rotateY(var(--scene-rotation));
-  will-change: transform;
-}
-
-/* Show night look */
-.sky-bg,
-.sun-glow,
-.smoke-glow,
-.house-glow,
-{
-opacity: var(--sky-opacity);
-will-change: transform;
 }
