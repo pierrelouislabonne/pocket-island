@@ -33,9 +33,9 @@
 The project logic is modularized into specialized scripts to handle different aspects of the experience:
 
 ### Core Logic
-* **`scene-rotation.js`**: Manages the continuous motor and manual drag logic.
+* **`island-cycle.js`**: Manages the continuous motor and manual drag logic.
 * **`controls.js`**: Initializes the global `window.islandState` and handles UI faders.
-* **`day-night-cycle.js`**: Specifically handles the celestial rotation values based on the state.
+* **`sky-cycle.js`**: Specifically handles the celestial rotation values based on the state.
 
 ### Utilities
 * **`custom-cursor.js`**: Contains the logic for the tilting UI cursor and its interaction states.
