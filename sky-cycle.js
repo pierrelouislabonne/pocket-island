@@ -1,19 +1,26 @@
 /* ---------------------------------------------------------------------------- */
-/*                                SKY CYCLE                                     */
+/*                             SKY CYCLE (DAY/NIGHT)                            */
 /* ---------------------------------------------------------------------------- */
 
 const initDayNightRender = () => {
   const root = document.documentElement;
+  let lastValue = window.islandState.dayNightValue;
+  const getMidpoint = (val) => 1 - Math.abs(val * 2 - 1);
 
   gsap.ticker.add(() => {
-    const progress = window.islandState.dayNightValue;
+    const currentValue = window.islandState.dayNightValue;
 
-    // 1. Rotation (0-180deg)
-    root.style.setProperty("--sky-rotation", `${progress * 180}deg`);
-
-    // 2. Opacity (0-1)
-    root.style.setProperty("--sky-opacity", progress);
-
+    if (currentValue !== lastValue) {
+      gsap.set(root, {
+        "--dn-rotation": `${currentValue * 180}deg`,
+        "--dn-opacity": currentValue,
+        "--dn-progress": currentValue,
+        "--dn-midpoint": getMidpoint(currentValue),
+        /* Force to repaint clouds even they are outside the viewport */
+        "--ios-repaint": (currentValue * 0.01) + "px"
+      });
+      lastValue = currentValue;
+    }
   });
 };
 
