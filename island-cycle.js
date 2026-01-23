@@ -10,7 +10,7 @@ const initSceneRotation = () => {
     rotation: 0,
     baseSpeed: 30,
     currentSpeedFactor: 1,
-    sensitivity: -0.1,
+    sensitivity: -0.2,
     maxDelta: 40,
   };
 
@@ -35,7 +35,7 @@ const initSceneRotation = () => {
     onRelease: () =>
       gsap.to(config, {
         currentSpeedFactor: 1,
-        duration: 0.8,
+        duration: 0.4,
         ease: "power2.inOut",
         overwrite: true,
       }),
@@ -65,7 +65,7 @@ const initSceneRotation = () => {
   function render() {
     const coreProgress = config.rotation / 360;
     scene.style.setProperty("--scene-rotation", `${config.rotation}deg`);
-    scene.style.setProperty("--scene-move", `${coreProgress * 100}%`);
+    scene.style.setProperty("--scene-progress", `${coreProgress * 100}%`);
   }
 };
 
