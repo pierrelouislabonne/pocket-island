@@ -34,7 +34,6 @@ const initDayNightRender = () => {
     const nightHex = styles.getPropertyValue(`--night-colors--${slug}`).trim();
 
     return {
-      // Inject interpolation in the active color var
       activeVar: `--active-colors--${slug}`,
       lerp: gsap.utils.interpolate(dayHex, nightHex || dayHex)
     };
@@ -48,7 +47,6 @@ const initDayNightRender = () => {
     if (currentValue === lastValue) return;
 
     const updates = {
-      // On remet la rotation pour l'arc du soleil/lune
       "--dn-rotation": `${currentValue * 180}deg`,
       "--dn-progress": currentValue,
       "--dn-midpoint": getMidpoint(currentValue),
