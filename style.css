@@ -8,3 +8,13 @@
 .cursor-tag {
   opacity: 0;
 }
+
+/* Show intro layer at page load */
+.c-intro {
+  display: block;
+}
+
+/* Hide browser cursor at page load */
+.body {
+  cursor: none;
+}
