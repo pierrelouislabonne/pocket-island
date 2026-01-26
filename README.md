@@ -2,7 +2,7 @@
 
 **Pocket Island** is an experimental Webflow project featuring a dynamic 3D island built entirely with **CSS 3D transforms**. The experience is powered by **GSAP** for high-performance interactions, state management, and smooth animations.
 
-✨ **You can clone this project on Webflow [here](webflow.com).**
+✨ **You can clone this project on Webflow [webflow.com](https://webflow.com/made-in-webflow/website/pocket-island).**
 
 ---
 
