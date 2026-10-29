@@ -1,0 +1,13 @@
+{
+  "name": "pocket-island",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Custom scripts for the Pocket Island Webflow site",
+  "scripts": {
+    "build": "rm -rf dist && esbuild src/main.js --bundle --minify --format=iife --target=es2018 --outfile=dist/pocket-island.js && esbuild src/style.css --minify --outfile=dist/style.css",
+    "dev": "esbuild src/main.js --bundle --format=iife --outfile=dist/pocket-island.js --servedir=dist --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
