@@ -57,10 +57,10 @@ In Webflow, load GSAP, `Draggable` and `InertiaPlugin` first, then:
 
 ```html
 <!-- Head -->
-<link rel="stylesheet" href="https://<site>.netlify.app/style.css">
+<link rel="stylesheet" href="https://pocket-island-code.netlify.app/style.css">
 
 <!-- Before </body> -->
-<script src="https://<site>.netlify.app/pocket-island.js" defer></script>
+<script src="https://pocket-island-code.netlify.app/pocket-island.js" defer></script>
 ```
 
 ---
