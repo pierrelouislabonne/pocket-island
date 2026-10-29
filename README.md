@@ -30,7 +30,7 @@
 
 ## 📂 Project Structure
 
-The project logic is modularized into specialized scripts to handle different aspects of the experience:
+The project logic is modularized into specialized scripts in `src/`, bundled by `src/main.js` (entry point) into a single file:
 
 ### Core Logic
 * **`island-cycle.js`**: Manages the continuous motor and manual drag logic.
@@ -40,6 +40,28 @@ The project logic is modularized into specialized scripts to handle different as
 ### Utilities
 * **`custom-cursor.js`**: Contains the logic for the tilting UI cursor and its interaction states.
 * **`breakpoint-watcher.js`**: Monitors screen size to adjust performance and state for mobile devices.
+
+---
+
+## 🚢 Build & Deploy
+
+Scripts are bundled with **esbuild** and hosted on **Netlify** (config in `netlify.toml`). Every push to `main` triggers a deploy.
+
+```bash
+npm install
+npm run build   # outputs dist/pocket-island.js and dist/style.css
+npm run dev     # watch mode, serves dist/ locally
+```
+
+In Webflow, load GSAP, `Draggable` and `InertiaPlugin` first, then:
+
+```html
+<!-- Head -->
+<link rel="stylesheet" href="https://<site>.netlify.app/style.css">
+
+<!-- Before </body> -->
+<script src="https://<site>.netlify.app/pocket-island.js" defer></script>
+```
 
 ---
 
